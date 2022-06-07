@@ -42,7 +42,7 @@ def main_page():
 
     👉 SUPPORT --> REGIONAL ECONOMIES""")
 
-    url = 'http://localhost:8501/page1'
+    url = 'https://theburstapp.herokuapp.com/page1'
 
     if st.button('FILL FORM NOW 💡'):
         webbrowser.open(url, new=2)

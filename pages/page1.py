@@ -84,7 +84,7 @@ def page1():
                 time.sleep(2)
                 st.success('Model done!')
 
-    url = 'http://localhost:8501/page2'
+    url = 'https://theburstapp.herokuapp.com/page2'
 
     if st.button('See Results'):
         webbrowser.open(url, new=2)
