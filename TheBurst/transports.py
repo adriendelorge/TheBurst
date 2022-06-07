@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import xlrd
+#import xlrd
 from TheBurst.cities_data import get_cities_data, coord_converter
 from TheBurst.utils import haversine
 
@@ -25,10 +25,10 @@ def get_airport_data():
             disonecity.append(haversine(coords,coords2))
             cityname.append(city)
             aptname.append(airport)
-    d={'City':cityname,'Airport':aptname,'Distance':disonecity}
+    d={'code_commune_INSEE':cityname,'Airport':aptname,'Distance':disonecity}
     df_cityairport=pd.DataFrame(d)
     df_cityairport.dropna(subset=['Distance'],inplace=True)
-    df_distance=df_cityairport[['City','Airport','Distance']].groupby(['City'])['Distance'].min().to_frame()
+    df_distance=df_cityairport[['code_commune_INSEE','Airport','Distance']].groupby(['code_commune_INSEE'])['Distance'].min().to_frame()
     df_distance=df_distance.merge(df_cityairport,on='Distance',how='left')
     return df_distance
 
@@ -52,9 +52,9 @@ def get_train_data():
             disonecity2.append(haversine(coords,coords2))
             cityname2.append(city)
             aptname2.append(train)
-    d2={'City':cityname2,'Train':aptname2,'Distance':disonecity2}
+    d2={'code_commune_INSEE':cityname2,'Train':aptname2,'Distance':disonecity2}
     df_citytrain=pd.DataFrame(d2)
     df_citytrain.dropna(subset=['Distance'],inplace=True)
-    df_distance2=df_citytrain[['City','Train','Distance']].groupby(['City'])['Distance'].min().to_frame()
+    df_distance2=df_citytrain[['code_commune_INSEE','Train','Distance']].groupby(['code_commune_INSEE'])['Distance'].min().to_frame()
     df_distance2=df_distance2.merge(df_citytrain,on='Distance',how='left')
     return df_distance2
