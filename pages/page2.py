@@ -48,7 +48,7 @@ def page2():
 
     st.sidebar.markdown("OPTIMATION RESULT ✅ ")
 
-    url = 'https://theburstapp.herokuapp.com/page3'
+    url = 'http://localhost:8501/page3'
     if st.button('CONTINUE'):
         webbrowser.open(url, new=2)
 
