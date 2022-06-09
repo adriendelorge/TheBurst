@@ -1,8 +1,8 @@
 import requests
 import pandas as pd
-#import xlrd
-from TheBurst.cities_data import get_cities_data, coord_converter
-from TheBurst.utils import haversine
+import xlrd
+from TheBurst.cities_data import get_cities_data
+from TheBurst.utils import haversine, coord_converter
 
 def get_airport_data():
     df_airports=pd.read_excel('../raw_data/airports.xls', skiprows=[0,1])

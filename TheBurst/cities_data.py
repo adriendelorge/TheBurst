@@ -1,5 +1,5 @@
 import pandas as pd
-#import xlrd
+import xlrd
 
 def get_cities_data():
     df_cities=pd.read_csv('../raw_data/cities.csv')

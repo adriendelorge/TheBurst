@@ -10,6 +10,7 @@ pandas
 scikit-learn
 xlrd
 fasthaversine
+pandas-gbq
 
 # tests/linter
 black
