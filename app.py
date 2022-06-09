@@ -5,12 +5,10 @@ import pandas as pd
 import altair as alt
 from PIL import Image
 import webbrowser
+# from TheBurst import cities_data, main_file, map, transports, utils
 
 
 # https://www.youtube.com/watch?v=nSw96qUbK9o (for integrate de data)
-
-
-
 
 def main_page():
     st.sidebar.markdown("COMPANY INFO")

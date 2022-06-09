@@ -7,6 +7,7 @@ from PIL import Image
 import webbrowser
 
 
+
 def page3():
     st.markdown("# 👉 THANKS!!")
     st.sidebar.markdown("DOWNLOAD MODEL")

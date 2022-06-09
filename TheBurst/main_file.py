@@ -16,3 +16,5 @@ def final_dataframe():
 #Queries
 def get_three_best_cities():
     pass
+
+final_dataframe()
