@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-#import xlrd
+import xlrd
 from TheBurst.cities_data import get_cities_data
 from TheBurst.utils import haversine, coord_converter
 

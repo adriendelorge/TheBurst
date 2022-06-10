@@ -1,5 +1,5 @@
 import pandas as pd
-#import xlrd
+import xlrd
 
 def get_cities_data():
 
