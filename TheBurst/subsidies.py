@@ -3,7 +3,7 @@ import pandas as pd
 import xlrd
 
 def subsidies():
-    df_subsidies = pd.read_excel('raw_data/diffusion-zonages-afr-cog2021.xls')
+    df_subsidies = pd.read_excel('/Users/Tomas/code/adriendelorge/TheBurst/raw_data/diffusion-zonages-afr-cog2021.xls')
     df_subsidies.columns = ['code_commune_INSEE','nom','statut']
     df_subsidies= df_subsidies.drop(df_subsidies.index[[0,1,2,3,4]])
     df_subsidies= df_subsidies.drop(columns = ['nom'])

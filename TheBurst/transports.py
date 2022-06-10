@@ -5,7 +5,7 @@ from TheBurst.cities_data import get_cities_data
 from TheBurst.utils import haversine, coord_converter
 
 def get_airport_data():
-    df_airports=pd.read_excel('../raw_data/airports.xls', skiprows=[0,1])
+    df_airports=pd.read_excel('/Users/Tomas/code/adriendelorge/TheBurst/raw_data/airports.xls', skiprows=[0,1])
     w_header = df_airports.iloc[0] #grab the first row for the header #take the data less the header row
     df_airports.columns = w_header #set the header row as the df header
     df_airports = df_airports.drop(labels=0, axis=0)
@@ -33,7 +33,7 @@ def get_airport_data():
     return df_distance
 
 def get_train_data():
-    df_train=pd.read_excel('../raw_data/train.xls')
+    df_train=pd.read_excel('/Users/Tomas/code/adriendelorge/TheBurst/raw_data/train.xls')
     df_train['coordinates'] = df_train['WGS 84'].apply(lambda x: tuple(map(str, x.split(', '))))
     lattrain=[]
     lontrain=[]
