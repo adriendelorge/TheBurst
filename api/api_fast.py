@@ -2,18 +2,24 @@ from fastapi import FastAPI
 import os
 from google.oauth2 import service_account
 from google.cloud import bigquery
+from dotenv import load_dotenv, find_dotenv
+import json
 
 app = FastAPI()
 
    # define a root `/` endpoint
 @app.get("/")
 
-
 def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies):
-    #connection to database
-    pathjson="/Users/Tomas/Desktop/KEYS/the-burst-b6d61e428faa.json"
+    # point to .env file
+    env_path = find_dotenv() # automatic find
+    load_dotenv()
     CREDENTIAL_KEY = os.getenv('CREDENTIAL_KEY')
-    credentials = service_account.Credentials.from_service_account_file(pathjson)
+    credentials = service_account.Credentials.from_service_account_info(json.loads(CREDENTIAL_KEY))
+    #connection to database
+    #pathjson="/Users/Tomas/Desktop/KEYS/the-burst-b6d61e428faa.json"
+    #CREDENTIAL_KEY = os.getenv('CREDENTIAL_KEY')
+    #credentials = service_account.Credentials.from_service_account_file(pathjson)
     client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     query1=f"""SELECT * FROM `the-burst.database_cities.testfrenchcities` WHERE Distance_x < {dist_airplane}
     AND Distance_y < {dist_train}"""

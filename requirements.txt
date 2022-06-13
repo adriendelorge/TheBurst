@@ -9,7 +9,6 @@ numpy
 pandas
 scikit-learn
 xlrd
-fasthaversine
 pandas-gbq
 
 # tests/linter
@@ -34,6 +33,9 @@ termcolor
 streamlit
 altair
 pillow
-=======
+
 folium
 streamlit-folium
+uvicorn
+fastapi
+python-dotenv
