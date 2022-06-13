@@ -7,18 +7,15 @@ from PIL import Image
 import webbrowser
 
 
+# def page3(csv):
+#     st.markdown("# 👉 THANKS!!")
+#     st.sidebar.markdown("DOWNLOAD MODEL")
 
-def page3():
-    st.markdown("# 👉 THANKS!!")
-    st.sidebar.markdown("DOWNLOAD MODEL")
-
-
-
-    st.download_button(
-     label="Download model result as CSV",
-     data='csv',
-     file_name='large_df.csv', #### ----- put the model data result ------ ###
-     mime='text/csv')
+#     st.download_button(
+#      label="Download model result as CSV",
+#      data=csv,
+#      file_name='model_result.csv',
+#      mime='text/csv') #### ----- put the model data result ------ ##)
 
 
-page3()
+# page3(csv)

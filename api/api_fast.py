@@ -5,7 +5,7 @@ from google.cloud import bigquery
 
 app = FastAPI()
 
-   # define a root `/` endpoint
+# define a root `/` endpoint
 @app.get("/")
 
 
@@ -22,14 +22,14 @@ def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies
     df=results.to_dataframe()
     if subsidies == 'Yes':
         df=df[df['statut']==1]
-    df['scorelifelevel']= df['PrixMoyen_M2']/14803
+    df['scorelifelevel']= df['lifelevelscore']
     if quality == 'high':
         df['weightedscorelifelevel']= df['scorelifelevel']
     if quality == 'medium':
         df['weightedscorelifelevel'] = df['scorelifelevel']*df['scorelifelevel']
     if quality == 'low' :
         df['weightedscorelifelevel'] = df['scorelifelevel']*df['scorelifelevel']*df['scorelifelevel']
-    df=df[df['PrixMoyen_M2']!=0]
+    df=df[df['lifelevelscore']!=0]
     df=df.sort_values(by='weightedscorelifelevel',ascending=False)
     df=df.head(3)
     for i in range(len(df)):
