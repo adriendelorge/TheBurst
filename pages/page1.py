@@ -4,16 +4,31 @@ import webbrowser
 import streamlit as st
 import numpy as np
 import pandas as pd
-import altair as alt
 from PIL import Image
 import webbrowser
+import streamlit as st
+import altair as alt
+from PIL import Image
+import folium
+from streamlit_folium import folium_static
+import requests
+from streamlit_chat import message
 
 
-###------FORM PART------###
 
 
+###------PART 1: FORM------###
 
-# def page1():
+
+hide_menu_style = """
+            <style>
+            #MainMenu {visibility: hidden; }
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+
 st.markdown("""# 👉 FILL WITH YOUR COMPANY DATA
 
 """)
@@ -113,143 +128,123 @@ with st.form(key='my_form'):
             st.success('Model done!')
 
 
-url = 'http://localhost:8501/page2'
-
-# if st.button('See Results'):
-
-#     webbrowser.open(url, new=2)
+# url = 'http://localhost:8501/page2'
 
 
-# page1()
-
- ###--------API PART-------####
 
 
-import time
-import streamlit as st
-import numpy as np
-import pandas as pd
-import altair as alt
-from PIL import Image
-import webbrowser
-import folium
-from streamlit_folium import folium_static
-import requests
-import streamlit as st
-from streamlit_chat import message
+
+ ###--------PART 2: API AND RESULTS-------####
 
 
-# def page2():
-if submit_button:
-    st.markdown("# 👉 THE BURST RESULTS")
 
-    # st.subheader('DATA RESULTS OVERVIEW / SCROOL DOWN FOR CITIES INFORMATION')
+# if submit_button:
+st.markdown("# 👉 THE BURST RESULTS")
 
 
-    response = requests.get(
-        f'http://localhost:8086/?employees={employees}&budget={budget}&dist_airplane={dist_airplane}&dist_train={dist_train}&quality={quality}&subsidies={subsidies}',
-        # params={'employees':employees, 'budget':budget, 'dist_airplane':dist_airplane, 'dist_train':dist_train, 'quality':quality, 'subsidies':subsidies},
-        ).json()
+
+response = requests.get(
+    f'http://localhost:8086/?employees={employees}&budget={budget}&dist_airplane={dist_airplane}&dist_train={dist_train}&quality={quality}&subsidies={subsidies}',
+    ).json()
 
 
-    st.subheader(' RECOMMENDATION ORDER (press the squares for more individual information)')
+st.subheader('RECOMMENDATION ORDER (press the squares for more individual information)')
+
+first_rel = st.checkbox(f'1) {response["nom_commune_complet"][0]}📍')
+
+if  first_rel:
+    st.text(f'📍 Located in {response["nom_departement"][0]} deparment, {response["nom_region"][0]} region')
+    st.text(f'🛫 The nearest airport is {response["Airport"][0]}, located {round(response["Distance_x"][0])} KM away')
+    st.text(f'🚆 The nearest train station is {response["Train"][0]}, located {round(response["Distance_y"][0])} KM away')
+    st.text(f'👥 The population in the city is {round(response["Population"][0])} people')
+    st.text(f'💰 The average m2 price is  ${round(response["PrixMoyen_M2"][0])}')
+
+second_rel = st.checkbox(f'2) {response["nom_commune_complet"][1]}📍')
+
+if second_rel:
+    st.text(f'📍 Located in {response["nom_departement"][1]} deparment, {response["nom_region"][1]} region')
+    st.text(f'🛫The nearest airport is {response["Airport"][1]}, located {round(response["Distance_x"][1])} KM away')
+    st.text(f'🚆The nearest train station is {response["Train"][1]}, located {round(response["Distance_y"][1])} KM away')
+    st.text(f'👥 The population in the city is {round(response["Population"][1])} people')
+    st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][1])}')
+
+third_rel = st.checkbox(f'3) {response["nom_commune_complet"][2]}📍')
+
+if third_rel:
+    st.text(f'📍 Located in {response["nom_departement"][2]} deparment, {response["nom_region"][2]} region')
+    st.text(f'🛫The nearest airport is {response["Airport"][2]}, located {round(response["Distance_x"][2])} KM away')
+    st.text(f'🚆The nearest train station is {response["Train"][2]}, located {round(response["Distance_y"][2])} KM away')
+    st.text(f'👥 The population in the city is {round(response["Population"][2])} people')
+    st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][2])}')
 
 
-    first_rel = st.checkbox(f'1) {response["nom_commune_complet"][0]}📍')
+st.sidebar.markdown("OPTIMATION RESULT ✅ ")
 
-    if  first_rel:
-        st.text(f'📍 Located in {response["nom_departement"][0]} deparment, {response["nom_region"][0]} region')
-        st.text(f'🛫 The nearest airport is {response["Airport"][0]}, located {round(response["Distance_x"][0])} KM away')
-        st.text(f'🚆 The nearest train station is {response["Train"][0]}, located {round(response["Distance_y"][0])} KM away')
-        st.text(f'👥 The population in the city is {round(response["Population"][0])} people')
-        st.text(f'💰 The average m2 price is  ${round(response["PrixMoyen_M2"][0])}')
+def create_map(coord1,city1,coord2,city2,coord3,city3):
 
-    second_rel = st.checkbox(f'2) {response["nom_commune_complet"][1]}📍')
+    m=folium.Map(location=[46.71109, 1.7191036],zoom_start=5)
+    folium.Marker(
+        location=coord1, # coordinates for the marker
+        popup=city1, # pop-up label for the marker
+        icon=folium.Icon(color='green', icon_color='white', icon='ok-sign', angle=0, prefix='glyphicon')).add_to(m)
+    folium.Marker(
+        location=coord2, # coordinates for the marker
+        popup=city2, # pop-up label for the marker
+        icon=folium.Icon(color='lightgreen', icon_color='white', icon='ok-sign', angle=0, prefix='glyphicon')).add_to(m)
+    folium.Marker(
+        location=coord3, # coordinates for the marker
+        popup=city3, # pop-up label for the marker
+        icon=folium.Icon(color='lightgreen', icon_color='white', icon='ok-sign', angle=0, prefix='glyphicon')).add_to(m)
+    return m
 
-    if second_rel:
-        st.text(f'📍 Located in {response["nom_departement"][1]} deparment, {response["nom_region"][1]} region')
-        st.text(f'🛫The nearest airport is {response["Airport"][1]}, located {round(response["Distance_x"][1])} KM away')
-        st.text(f'🚆The nearest train station is {response["Train"][1]}, located {round(response["Distance_y"][1])} KM away')
-        st.text(f'👥 The population in the city is {round(response["Population"][1])} people')
-        st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][1])}')
-
-    third_rel = st.checkbox(f'3) {response["nom_commune_complet"][2]}📍')
-
-    if third_rel:
-        st.text(f'📍 Located in {response["nom_departement"][2]} deparment, {response["nom_region"][2]} region')
-        st.text(f'🛫The nearest airport is {response["Airport"][2]}, located {round(response["Distance_x"][2])} KM away')
-        st.text(f'🚆The nearest train station is {response["Train"][2]}, located {round(response["Distance_y"][2])} KM away')
-        st.text(f'👥 The population in the city is {round(response["Population"][2])} people')
-        st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][2])}')
+map_rel = create_map(response['coordinates'][0],response['nom_commune_complet'][0],response['coordinates'][1],response['nom_commune_complet'][1],response['coordinates'][2],response['nom_commune_complet'][2])
+folium_static(map_rel)
 
 
-    st.sidebar.markdown("OPTIMATION RESULT ✅ ")
-
-    def create_map(coord1,city1,coord2,city2,coord3,city3):
-
-        m=folium.Map(location=[46.71109, 1.7191036],zoom_start=5)
-        folium.Marker(
-            location=coord1, # coordinates for the marker
-            popup=city1, # pop-up label for the marker
-            icon=folium.Icon(color='green', icon_color='white', icon='ok-sign', angle=0, prefix='glyphicon')).add_to(m)
-        folium.Marker(
-            location=coord2, # coordinates for the marker
-            popup=city2, # pop-up label for the marker
-            icon=folium.Icon(color='lightgreen', icon_color='white', icon='ok-sign', angle=0, prefix='glyphicon')).add_to(m)
-        folium.Marker(
-            location=coord3, # coordinates for the marker
-            popup=city3, # pop-up label for the marker
-            icon=folium.Icon(color='lightgreen', icon_color='white', icon='ok-sign', angle=0, prefix='glyphicon')).add_to(m)
-        return m
-
-    map_rel = create_map(response['coordinates'][0],response['nom_commune_complet'][0],response['coordinates'][1],response['nom_commune_complet'][1],response['coordinates'][2],response['nom_commune_complet'][2])
-    folium_static(map_rel)
-
-# page2()
 
 #---- Export result as a file ----#
 
 
-    path = 'model_result.csv'
+path = 'model_result.csv'
 
-    results1 = [response["nom_commune_complet"][0],response["nom_commune_complet"][1],response["nom_commune_complet"][2]]
+results1 = [response["nom_commune_complet"][0],response["nom_commune_complet"][1],response["nom_commune_complet"][2]]
 
-    data1 = {'City': results1}
+data1 = {'City': results1}
 
-    dataframe = pd.DataFrame(data1).to_csv(path)
-
-
-    csv = pd.DataFrame(data1).to_csv()
+dataframe = pd.DataFrame(data1).to_csv(path)
 
 
-    def page3(csv):
-
-        st.sidebar.markdown("DOWNLOAD MODEL")
-
-        st.download_button(
-        label="Download model result as CSV",
-        data=csv,
-        file_name='model_result.csv',
-        mime='text/csv') #### ----- put the model data result ------ ##)
-
-        # st.markdown("# 👉 THANKS!!")
-    page3(csv)
+csv = pd.DataFrame(data1).to_csv()
 
 
-    # url = 'http://localhost:8501/page3'
+def page3(csv):
+
+    st.sidebar.markdown("DOWNLOAD MODEL")
+
+    st.download_button(
+    label="Download model result as CSV",
+    data=csv,
+    file_name='model_result.csv',
+    mime='text/csv')
 
 
-    if st.button('CONTINUE'):
-        # webbrowser.open(url, new=2)
-        # time.sleep(3)
-        st.write('test')
-        message("Thank you very much for using The Burst")
+page3(csv)
 
-        time.sleep(3)
-        message("Leave us your contact if you want to get more detailed information about the model.")
 
-        time.sleep(2)
-        message("👇")
+# url = 'http://localhost:8501/page3'
 
-        time.sleep(2)
-        number = st.text_input('Number')
+
+if st.button('Contact us'):
+
+    # time.sleep(3)
+    time.sleep(1)
+    message("Thank you very much for using The Burst")
+
+    time.sleep(2)
+    message("Leave us your contact if you want to get more detailed information about the model.")
+
+    time.sleep(2)
+    message("👇")
+
+
+    number = st.text_input('NUMBER / EMAIL')

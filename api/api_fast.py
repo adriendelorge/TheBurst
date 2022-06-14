@@ -7,8 +7,10 @@ app = FastAPI()
 
 # define a root `/` endpoint
 @app.get("/")
+# def index():
+#     return {"ok":True}
 
-
+# @app.get("/get_three_cities")
 def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies):
     #connection to database
     pathjson="/Users/Tomas/Desktop/KEYS/the-burst-b6d61e428faa.json"
@@ -38,4 +40,3 @@ def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies
     return dit
 
 get_three_cities(100,300000,100,40,'high','Yes')
-# /predict?employees=100&budget=300000&dist_airplane=100&dist_train=40&quality=high&subsidies=Yes
