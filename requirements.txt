@@ -10,6 +10,7 @@ pandas
 scikit-learn
 xlrd
 pandas-gbq
+openpyxl
 
 # tests/linter
 black
