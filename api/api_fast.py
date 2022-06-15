@@ -21,8 +21,8 @@ def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies
     #CREDENTIAL_KEY = os.getenv('CREDENTIAL_KEY')
     #credentials = service_account.Credentials.from_service_account_file(pathjson)
     client = bigquery.Client(credentials=credentials, project=credentials.project_id)
-    query1=f"""SELECT * FROM `the-burst.database_cities.testfrenchcities` WHERE Distance_x < {dist_airplane}
-    AND Distance_y < {dist_train}"""
+    query1=f"""SELECT * FROM `the-burst.database_cities.testfrenchcities` WHERE Distance_x < {dist_airplane}+5
+    AND Distance_y < {dist_train}+5"""
     query_job = client.query(query1)
     results = query_job.result()
     df=results.to_dataframe()
@@ -71,10 +71,11 @@ def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies
     if sectorimportance == 'high':
         df['weightedsectorscore']= df['sectorratio']
     if sectorimportance == 'medium':
-        df['weightedsectorscore'] = (df['sectorratio'])**2
+        df['weightedsectorscore'] = (df['sectorratio'])*(df['sectorratio'])
     if sectorimportance == 'low' :
-        df['weightedsectorscore'] = (df['sectorratio'])**3
-    df=df.sort_values(by='weightedscorelifelevel',ascending=False)
+        df['weightedsectorscore'] = (df['sectorratio'])*(df['sectorratio'])*(df['sectorratio'])
+    df['finalscore']=df['weightedscorelifelevel']*3+df['weightedsectorscore']
+    df=df.sort_values(by='finalscore',ascending=False)
     if len(df)>=3:
         df=df.head(3)
         for i in range(len(df)):
