@@ -36,15 +36,18 @@ st.markdown("""# 👉 FILL WITH YOUR COMPANY DATA
 with st.form(key='my_form'):
 
     employees = st.slider('How many employees does your company have?', 0, 3000)
-    st.write("Employees number is", employees)
+    # st.write("Employees number is", employees)
 
+    form_bud= 10 * 2500 * employees
+    min_budget = st.text_input('Budget estimator: The average minimum budget you would need for this amount of employees is', form_bud)
+    # st.write('Your budget is', budget)
 
 
     budget = st.text_input('What is your budget?')
-    st.write('Your budget is', budget)
+    # st.write('Your budget is', budget)
 
 
-    sector = st.selectbox(
+    sectorcode = st.selectbox(
         'In which business sector are you located?',
         ('BE - Manufacturing',
         'FZ - Construction',
@@ -56,32 +59,36 @@ with st.form(key='my_form'):
         'OQ - Education, public administration, health, social action',
         'RU - Others'))
 
-    sector = sector[0:2]
+    sectorcode = sectorcode[0:2]
 
 
-    st.write('Company sector:', sector)
+    # st.write('Company sector:', sector)
 
 
-    competitors = st.radio('How important is it to you that there are companies from the same business sector in the city?'
+    sectorimportance = st.radio('How important is it to you that there are companies from the same business sector in the city?'
 
     , ('low', 'medium', 'high'))
 
-    st.write('Importance:', competitors)
+    # st.write('Importance:', competitors)
 
 
     dist_airplane = st.selectbox(
     'What is the maximum distance between your headquarter and the airport (kilometers)?',
     ('50', '100', '500', '1000'))
 
-    st.write('Optime distance to transport:', dist_airplane, 'KM')
+    # st.write('Optime distance to transport:', dist_airplane, 'KM')
 
 
     dist_train = st.selectbox(
     'What is the maximum distance between your headquarter and the train (kilometers)?',
     ('20', '50', '100', '500', '1000'))
 
-    st.write('Optime distance to transport:', dist_train, 'KM')
+    # st.write('Optime distance to transport:', dist_train, 'KM')
 
+
+    subsidies = st.radio('Do you want subsidies?', ('Yes', 'No'))
+
+    # st.write(subsidies)
 
     quality = st.radio('How important is the quality of life of your employees?'
 
@@ -95,11 +102,15 @@ with st.form(key='my_form'):
     st.write('- Access to medical facilities')
     st.write('- Access to other basic facilities (shops, cultural facilities, leisure etc.)')
 
-    st.write(quality)
+    # st.write(quality)
 
-    subsidies = st.radio('Do you want subsidies?', ('Yes', 'No'))
+    mountain = st.radio('Is important to you to be near the mountain?', ('Important', 'Not important'))
 
-    st.write(subsidies)
+    # st.write(mountain)
+
+    sea = st.radio('Is important to you to be near the sea?', ('Important', 'Not important'))
+
+    # st.write(sea)
 
 
     st.sidebar.markdown("QUESTION FORM  📈 ")
@@ -116,7 +127,7 @@ with st.form(key='my_form'):
     submit_button = st.form_submit_button(label='Submit form')
 
     if submit_button:
-        st.write('Submit succes')
+        st.write('Submit success')
 
         my_bar = st.progress(0)
         for percent_complete in range(100):
@@ -133,7 +144,6 @@ with st.form(key='my_form'):
 
 
 
-
  ###--------PART 2: API AND RESULTS-------####
 
 
@@ -144,8 +154,9 @@ st.markdown("# 👉 THE BURST RESULTS")
 
 
 response = requests.get(
-    f'http://localhost:8086/?employees={employees}&budget={budget}&dist_airplane={dist_airplane}&dist_train={dist_train}&quality={quality}&subsidies={subsidies}',
+    f'http://localhost:8000/?employees={employees}&budget={budget}&dist_airplane={dist_airplane}&dist_train={dist_train}&quality={quality}&subsidies={subsidies}&mountain={mountain}&sea={sea}&sectorcode={sectorcode}&sectorimportance={sectorimportance}'
     ).json()
+
 
 
 st.subheader('RECOMMENDATION ORDER (press the squares for more individual information)')
@@ -158,6 +169,14 @@ if  first_rel:
     st.text(f'🚆 The nearest train station is {response["Train"][0]}, located {round(response["Distance_y"][0])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][0])} people')
     st.text(f'💰 The average m2 price is  ${round(response["PrixMoyen_M2"][0])}')
+    st.text(f'📊 The winner of the election here was {(response["winner"][0])} with {(response["winner_percentage"][0])}% of the votes')
+    # st.text(f'📊 The winner of the election here was {(response["cluster"][0])})
+    response1 = requests.get(
+    f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
+    ).json()
+    st.text(f'⚙️ Five similar nearby cities  {response1["nom_commune_complet"][0]}, {response1["nom_commune_complet"][1]}, {response1["nom_commune_complet"][2]}, {response1["nom_commune_complet"][3]}, {(response1["nom_commune_complet"][4])}')
+
+
 
 second_rel = st.checkbox(f'2) {response["nom_commune_complet"][1]}📍')
 
@@ -167,6 +186,13 @@ if second_rel:
     st.text(f'🚆The nearest train station is {response["Train"][1]}, located {round(response["Distance_y"][1])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][1])} people')
     st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][1])}')
+    st.text(f'📊 The winner of the election here was {(response["winner"][1])} with {(response["winner_percentage"][1])}% of the votes ')
+
+    response2 = requests.get(
+    f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
+    ).json()
+    st.text(f'⚙️ Five similar nearby cities  {response2["nom_commune_complet"][0]}, {response2["nom_commune_complet"][1]}, {response2["nom_commune_complet"][2]}, {response2["nom_commune_complet"][3]}, {(response2["nom_commune_complet"][4])}')
+
 
 third_rel = st.checkbox(f'3) {response["nom_commune_complet"][2]}📍')
 
@@ -176,7 +202,13 @@ if third_rel:
     st.text(f'🚆The nearest train station is {response["Train"][2]}, located {round(response["Distance_y"][2])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][2])} people')
     st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][2])}')
+    st.text(f'📊 The winner of the election here was {(response["winner"][2])} with {(response["winner_percentage"][2])}% of the votes')
 
+
+    response3 = requests.get(
+    f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
+    ).json()
+    st.text(f'⚙️ Five similar nearby cities  {response3["nom_commune_complet"][0]}, {response3["nom_commune_complet"][1]}, {response3["nom_commune_complet"][2]}, {response3["nom_commune_complet"][3]}, {(response3["nom_commune_complet"][4])}')
 
 st.sidebar.markdown("OPTIMATION RESULT ✅ ")
 
@@ -237,8 +269,7 @@ page3(csv)
 if st.button('Contact us'):
 
     # time.sleep(3)
-    time.sleep(1)
-    message("Thank you very much for using The Burst")
+    message("Thank you very much for using The Burst 💥")
 
     time.sleep(2)
     message("Leave us your contact if you want to get more detailed information about the model.")
@@ -247,4 +278,4 @@ if st.button('Contact us'):
     message("👇")
 
 
-    number = st.text_input('NUMBER / EMAIL')
+    number = st.text_input('NUMBER 📱 / EMAIL 📩')
