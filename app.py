@@ -20,29 +20,29 @@ def main_page():
 
     st.title('WELCOME')
 
-    st.write('What is THE BURST?')
+    st.write('What is The Burst?')
 
 
     st.markdown(
     """
-    A optimization model for decentralization of corporate headquarters to rural areas and small cities
+    An optimization model for decentralization of corporate headquarters to rural areas and small cities
 
     ### What do we do?
     - Optimize your data
-    - Predicting your company's success with AI
-    - City or town recommendations to place your headquarter with a model based on your business preferences
+    - Create a model based on your business/life preferences
+    - Provide you with cities top recommendations, where you have the most chances of success
 
-    ### BENEFITS
+    ### Benefits
 
-    👉 CHOOSE --> THE BEST PLACE FOR YOU HEADQUARTERS
+    👉 CHOOSE --> The best place for your headquarters
 
-    👉 GAIN --> QUALITY OF LIFE
+    👉 GAIN --> Quality of life
 
-    👉 SUPPORT --> REGIONAL ECONOMIES""")
+    👉 SUPPORT --> Regional Economies""")
 
     url = 'http://localhost:8501/page1'
 
-    if st.button('FILL FORM NOW 💡'):
+    if st.button('Take me to the app 💡'):
         webbrowser.open(url, new=2)
 
 main_page()
