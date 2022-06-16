@@ -153,7 +153,7 @@ st.markdown("# 👉 The Burst results")
 
 
 response = requests.get(
-    f'http://localhost:8000/?employees={employees}&budget={budget}&dist_airplane={dist_airplane}&dist_train={dist_train}&quality={quality}&subsidies={subsidies}&mountain={mountain}&sea={sea}&sectorcode={sectorcode}&sectorimportance={sectorimportance}'
+    f' https://theburst-ybkzpxtq5a-et.a.run.app/?employees={employees}&budget={budget}&dist_airplane={dist_airplane}&dist_train={dist_train}&quality={quality}&subsidies={subsidies}&mountain={mountain}&sea={sea}&sectorcode={sectorcode}&sectorimportance={sectorimportance}'
     ).json()
 
 
@@ -171,7 +171,7 @@ if  first_rel:
     st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][0])} with {(response["winner_percentage"][0])}% of the votes')
     # st.text(f'📊 The winner of the election here was {(response["cluster"][0])})
     response1 = requests.get(
-    f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
+    f'https://theburst-ybkzpxtq5a-et.a.run.app/cluster?cluster={response["cluster"][0]}'
     ).json()
     st.text(f'⚙️ You may also look at those similar cities:  {response1["nom_commune_complet"][0]}, {response1["nom_commune_complet"][1]}, {response1["nom_commune_complet"][2]}, {response1["nom_commune_complet"][3]}, {(response1["nom_commune_complet"][4])}')
 
@@ -188,7 +188,7 @@ if second_rel:
     st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][1])} with {(response["winner_percentage"][1])}% of the votes ')
 
     response2 = requests.get(
-    f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
+    f'https://theburst-ybkzpxtq5a-et.a.run.app/cluster?cluster={response["cluster"][0]}'
     ).json()
     st.text(f'⚙️ You may also look at those similar cities:  {response2["nom_commune_complet"][0]}, {response2["nom_commune_complet"][1]}, {response2["nom_commune_complet"][2]}, {response2["nom_commune_complet"][3]}, {(response2["nom_commune_complet"][4])}')
 
@@ -205,7 +205,7 @@ if third_rel:
 
 
     response3 = requests.get(
-    f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
+    f'https://theburst-ybkzpxtq5a-et.a.run.app/cluster?cluster={response["cluster"][0]}'
     ).json()
     st.text(f'⚙️ You may also look at those similar cities:  {response3["nom_commune_complet"][0]}, {response3["nom_commune_complet"][1]}, {response3["nom_commune_complet"][2]}, {response3["nom_commune_complet"][3]}, {(response3["nom_commune_complet"][4])}')
 
