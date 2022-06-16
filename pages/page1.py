@@ -29,21 +29,20 @@ hide_menu_style = """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 
-st.markdown("""# 👉 FILL WITH YOUR COMPANY DATA
-
+st.markdown("""# 👉 Input your company data
 """)
 
 with st.form(key='my_form'):
 
-    employees = st.slider('How many employees does your company have?', 0, 3000)
+    employees = st.slider('How many employees does your company have (or plan to have)?', 0, 3000)
     # st.write("Employees number is", employees)
 
     form_bud= 10 * 2500 * employees
-    min_budget = st.text_input('Budget estimator: The average minimum budget you would need for this amount of employees is', form_bud)
+    st.write('Budget estimator: the average minimum you would need for this amount of employees is', form_bud)
     # st.write('Your budget is', budget)
 
 
-    budget = st.text_input('What is your budget?')
+    budget = st.text_input('What is the maximum budget for your offices space?')
     # st.write('Your budget is', budget)
 
 
@@ -65,34 +64,34 @@ with st.form(key='my_form'):
     # st.write('Company sector:', sector)
 
 
-    sectorimportance = st.radio('How important is it to you that there are companies from the same business sector in the city?'
+    sectorimportance = st.radio('How important is it to have companies from the same business sector in the city?'
 
-    , ('low', 'medium', 'high'))
+    , ('Low', 'Medium', 'High'))
 
     # st.write('Importance:', competitors)
 
 
     dist_airplane = st.selectbox(
-    'What is the maximum distance between your headquarter and the airport (kilometers)?',
+    'What is the maximum distance you want to be from the closest main airport (kilometers)?',
     ('50', '100', '500', '1000'))
 
     # st.write('Optime distance to transport:', dist_airplane, 'KM')
 
 
     dist_train = st.selectbox(
-    'What is the maximum distance between your headquarter and the train (kilometers)?',
+    'What is the maximum distance you want to be from the closest main train station (kilometers)?',
     ('20', '50', '100', '500', '1000'))
 
     # st.write('Optime distance to transport:', dist_train, 'KM')
 
 
-    subsidies = st.radio('Do you want subsidies?', ('Yes', 'No'))
+    subsidies = st.radio('Are you looking at a city offering public subsidies to companies?', ('Yes', 'No'))
 
     # st.write(subsidies)
 
-    quality = st.radio('How important is the quality of life of your employees?'
+    quality = st.radio('Which importance do you give to the global quality of life of your employees in the city?'
 
-    , ('low', 'medium', 'high'))
+    , ('Somewhat_Important', 'Important', 'Very_Important'))
 
     st.write('Our Quality of Life score is calculated on the basis of:')
     st.write('- The average available income per household (after all basic life expenses : buying/renting a home, food etc.')
@@ -104,11 +103,11 @@ with st.form(key='my_form'):
 
     # st.write(quality)
 
-    mountain = st.radio('Is important to you to be near the mountain?', ('Important', 'Not important'))
+    mountain = st.radio('Is it important for you to be close to mountain areas?', ('Important', 'Not_Important'))
 
     # st.write(mountain)
 
-    sea = st.radio('Is important to you to be near the sea?', ('Important', 'Not important'))
+    sea = st.radio('Is it important for you to be close to the coast(sea)?', ('Important', 'Not_Important'))
 
     # st.write(sea)
 
@@ -124,10 +123,10 @@ with st.form(key='my_form'):
         st.write(bytes_data)
 
 
-    submit_button = st.form_submit_button(label='Submit form')
+    submit_button = st.form_submit_button(label='Submit Criterias')
 
     if submit_button:
-        st.write('Submit success')
+        st.write('Submit Successful')
 
         my_bar = st.progress(0)
         for percent_complete in range(100):
@@ -149,7 +148,7 @@ with st.form(key='my_form'):
 
 
 # if submit_button:
-st.markdown("# 👉 THE BURST RESULTS")
+st.markdown("# 👉 The Burst results")
 
 
 
@@ -169,12 +168,12 @@ if  first_rel:
     st.text(f'🚆 The nearest train station is {response["Train"][0]}, located {round(response["Distance_y"][0])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][0])} people')
     st.text(f'💰 The average m2 price is  ${round(response["PrixMoyen_M2"][0])}')
-    st.text(f'📊 The winner of the election here was {(response["winner"][0])} with {(response["winner_percentage"][0])}% of the votes')
+    st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][0])} with {(response["winner_percentage"][0])}% of the votes')
     # st.text(f'📊 The winner of the election here was {(response["cluster"][0])})
     response1 = requests.get(
     f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
     ).json()
-    st.text(f'⚙️ Five similar nearby cities  {response1["nom_commune_complet"][0]}, {response1["nom_commune_complet"][1]}, {response1["nom_commune_complet"][2]}, {response1["nom_commune_complet"][3]}, {(response1["nom_commune_complet"][4])}')
+    st.text(f'⚙️ You may also look at those similar cities:  {response1["nom_commune_complet"][0]}, {response1["nom_commune_complet"][1]}, {response1["nom_commune_complet"][2]}, {response1["nom_commune_complet"][3]}, {(response1["nom_commune_complet"][4])}')
 
 
 
@@ -186,12 +185,12 @@ if second_rel:
     st.text(f'🚆The nearest train station is {response["Train"][1]}, located {round(response["Distance_y"][1])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][1])} people')
     st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][1])}')
-    st.text(f'📊 The winner of the election here was {(response["winner"][1])} with {(response["winner_percentage"][1])}% of the votes ')
+    st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][1])} with {(response["winner_percentage"][1])}% of the votes ')
 
     response2 = requests.get(
     f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
     ).json()
-    st.text(f'⚙️ Five similar nearby cities  {response2["nom_commune_complet"][0]}, {response2["nom_commune_complet"][1]}, {response2["nom_commune_complet"][2]}, {response2["nom_commune_complet"][3]}, {(response2["nom_commune_complet"][4])}')
+    st.text(f'⚙️ You may also look at those similar cities:  {response2["nom_commune_complet"][0]}, {response2["nom_commune_complet"][1]}, {response2["nom_commune_complet"][2]}, {response2["nom_commune_complet"][3]}, {(response2["nom_commune_complet"][4])}')
 
 
 third_rel = st.checkbox(f'3) {response["nom_commune_complet"][2]}📍')
@@ -202,15 +201,15 @@ if third_rel:
     st.text(f'🚆The nearest train station is {response["Train"][2]}, located {round(response["Distance_y"][2])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][2])} people')
     st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][2])}')
-    st.text(f'📊 The winner of the election here was {(response["winner"][2])} with {(response["winner_percentage"][2])}% of the votes')
+    st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][2])} with {(response["winner_percentage"][2])}% of the votes')
 
 
     response3 = requests.get(
     f'http://localhost:8000/cluster?cluster={response["cluster"][0]}'
     ).json()
-    st.text(f'⚙️ Five similar nearby cities  {response3["nom_commune_complet"][0]}, {response3["nom_commune_complet"][1]}, {response3["nom_commune_complet"][2]}, {response3["nom_commune_complet"][3]}, {(response3["nom_commune_complet"][4])}')
+    st.text(f'⚙️ You may also look at those similar cities:  {response3["nom_commune_complet"][0]}, {response3["nom_commune_complet"][1]}, {response3["nom_commune_complet"][2]}, {response3["nom_commune_complet"][3]}, {(response3["nom_commune_complet"][4])}')
 
-st.sidebar.markdown("OPTIMATION RESULT ✅ ")
+st.sidebar.markdown("OPTIMIZATION RESULT ✅ ")
 
 def create_map(coord1,city1,coord2,city2,coord3,city3):
 

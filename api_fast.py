@@ -35,11 +35,11 @@ def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies
     df['cost']= float(employees)*10*df['PrixMoyen_M2']
     df=df[df['cost']<=float(budget)]
     df['scorelifelevel']= df['lifelevelscore']
-    if quality == 'high':
+    if quality == 'Very_Important':
         df['weightedscorelifelevel']= df['scorelifelevel']
-    if quality == 'medium':
+    if quality == 'Important':
         df['weightedscorelifelevel'] = df['scorelifelevel']*df['scorelifelevel']
-    if quality == 'low' :
+    if quality == 'Somewhat_Important' :
         df['weightedscorelifelevel'] = df['scorelifelevel']*df['scorelifelevel']*df['scorelifelevel']
     df=df[df['PrixMoyen_M2']!=0]
     sector1 = df['s1'].tolist()
@@ -68,11 +68,11 @@ def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies
         total = sectorsscore[i] + sectorsscore2[i] + sectorsscore3[i]
         finalscore.append(total/10)
     df['sectorratio']= finalscore
-    if sectorimportance == 'high':
+    if sectorimportance == 'High':
         df['weightedsectorscore']= df['sectorratio']
-    if sectorimportance == 'medium':
+    if sectorimportance == 'Medium':
         df['weightedsectorscore'] = (df['sectorratio'])*(df['sectorratio'])
-    if sectorimportance == 'low' :
+    if sectorimportance == 'Low' :
         df['weightedsectorscore'] = (df['sectorratio'])*(df['sectorratio'])*(df['sectorratio'])
     df['finalscore']=df['weightedscorelifelevel']*3+df['weightedsectorscore']
     df=df.sort_values(by='finalscore',ascending=False)
@@ -84,19 +84,21 @@ def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies
         df = df.dropna()
         dit = df.to_dict(orient='list')
         return dit
-    # else:
-    #     return {'Error':'No such city, expand yor criterias!'}
+    else:
+        return {'Error':'No such city, expand yor criterias!'}
 
-get_three_cities(100,300000,100,40,'high','Yes','Important','Important','high','GI')
+get_three_cities(100,300000,100,40,'Very_Important','Yes','Important','Important','High','GI')
+# /?employees=100&budget=300000&dist_airplane=100&dist_train=40&quality=Very_Important&subsidies=Yes&mountain=Important&sea=Important&sectorimportance=High&sectorcode=GI
 
 @app.get("/cluster")
+
 def get_five_samples(cluster):
     # point to .env file
     # env_path = find_dotenv() # automatic find
     # load_dotenv()
     # CREDENTIAL_KEY = os.getenv('CREDENTIAL_KEY')
     # credentials = service_account.Credentials.from_service_account_info(json.loads(CREDENTIAL_KEY))
-    # connection to database
+    #connection to database
     pathjson="/Users/Tomas/Desktop/KEYS/the-burst-b6d61e428faa.json"
     CREDENTIAL_KEY = os.getenv('CREDENTIAL_KEY')
     credentials = service_account.Credentials.from_service_account_file(pathjson)
@@ -107,8 +109,10 @@ def get_five_samples(cluster):
     df=results.to_dataframe()
     df=df[df['cluster']==float(cluster)]
     df[['code_postal','mountain_city','sea_city']]=df[['code_postal','mountain_city','sea_city']].astype(dtype='float64')
-    df = df.fillna('')
+    df = df.dropna()
     sample_df=df.sample(n=5)
     dic = sample_df.to_dict(orient='list')
     return dic
+
 get_five_samples(4)
+# /cluster?cluster=4
