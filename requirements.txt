@@ -33,6 +33,6 @@ termcolor
 streamlit
 altair
 pillow
-=======
+
 folium
 streamlit-folium
