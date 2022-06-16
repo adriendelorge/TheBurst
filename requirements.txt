@@ -26,3 +26,5 @@ pillow
 
 folium
 streamlit-folium
+
+streamlit_chat
