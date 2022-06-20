@@ -34,8 +34,11 @@ st.markdown("""# 👉 Input your company data
 
 with st.form(key='my_form'):
 
+<<<<<<< HEAD
     st.header("""1) Company information""")
 
+=======
+>>>>>>> 094510354475bb0e2e40f0664c4c0b01c583a689
     employees = st.slider('How many employees does your company have (or plan to have)?', 0, 3000)
     # st.write("Employees number is", employees)
 
@@ -68,7 +71,11 @@ with st.form(key='my_form'):
 
     sectorimportance = st.radio('How important is it to have companies from the same business sector in the city?'
 
+<<<<<<< HEAD
     ,('Low', 'Medium', 'High'))
+=======
+    , ('Low', 'Medium', 'High'))
+>>>>>>> 094510354475bb0e2e40f0664c4c0b01c583a689
 
     # st.write('Importance:', competitors)
 
@@ -92,8 +99,14 @@ with st.form(key='my_form'):
 
     # st.write(subsidies)
 
+<<<<<<< HEAD
 
     st.header("""3) Quality of life""")
+=======
+    quality = st.radio('Which importance do you give to the global quality of life of your employees in the city?'
+
+    , ('Somewhat_Important', 'Important', 'Very_Important'))
+>>>>>>> 094510354475bb0e2e40f0664c4c0b01c583a689
 
     st.write('Quality of life is based on:')
     st.write('- The average available income per household (after all basic life expenses: buying/renting a home, food etc.')
@@ -131,7 +144,11 @@ with st.form(key='my_form'):
         st.write(bytes_data)
 
 
+<<<<<<< HEAD
     submit_button = st.form_submit_button(label='SUBMIT CRITERIAS')
+=======
+    submit_button = st.form_submit_button(label='Submit Criterias')
+>>>>>>> 094510354475bb0e2e40f0664c4c0b01c583a689
 
     if submit_button:
         st.write('Submit Successful')
@@ -175,9 +192,15 @@ if  first_rel:
     st.text(f'🛫 The nearest airport is {response["Airport"][0]}, located {round(response["Distance_x"][0])} KM away')
     st.text(f'🚆 The nearest train station is {response["Train"][0]}, located {round(response["Distance_y"][0])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][0])} people')
+<<<<<<< HEAD
     st.text(f'💰 The average m2 price is {round(response["PrixMoyen_M2"][0])} EUR')
     st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][0])} with {(response["winner_percentage"][0])}% of the votes')
 
+=======
+    st.text(f'💰 The average m2 price is  ${round(response["PrixMoyen_M2"][0])}')
+    st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][0])} with {(response["winner_percentage"][0])}% of the votes')
+    # st.text(f'📊 The winner of the election here was {(response["cluster"][0])})
+>>>>>>> 094510354475bb0e2e40f0664c4c0b01c583a689
     response1 = requests.get(
     f'https://theburst-ybkzpxtq5a-et.a.run.app/cluster?cluster={response["cluster"][0]}'
     ).json()
@@ -192,7 +215,11 @@ if second_rel:
     st.text(f'🛫The nearest airport is {response["Airport"][1]}, located {round(response["Distance_x"][1])} KM away')
     st.text(f'🚆The nearest train station is {response["Train"][1]}, located {round(response["Distance_y"][1])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][1])} people')
+<<<<<<< HEAD
     st.text(f'💰The average m2 price is {round(response["PrixMoyen_M2"][1])} EUR')
+=======
+    st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][1])}')
+>>>>>>> 094510354475bb0e2e40f0664c4c0b01c583a689
     st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][1])} with {(response["winner_percentage"][1])}% of the votes ')
 
     response2 = requests.get(
@@ -208,7 +235,11 @@ if third_rel:
     st.text(f'🛫The nearest airport is {response["Airport"][2]}, located {round(response["Distance_x"][2])} KM away')
     st.text(f'🚆The nearest train station is {response["Train"][2]}, located {round(response["Distance_y"][2])} KM away')
     st.text(f'👥 The population in the city is {round(response["Population"][2])} people')
+<<<<<<< HEAD
     st.text(f'💰The average m2 price is {round(response["PrixMoyen_M2"][2])} EUR')
+=======
+    st.text(f'💰The average m2 price is  ${round(response["PrixMoyen_M2"][2])}')
+>>>>>>> 094510354475bb0e2e40f0664c4c0b01c583a689
     st.text(f'📊 The winner of the elections 2nd round here was {(response["winner"][2])} with {(response["winner_percentage"][2])}% of the votes')
 
 
