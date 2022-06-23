@@ -7,7 +7,6 @@ wheel>=0.29
 # data science
 numpy
 pandas
-scikit-learn
 xlrd
 pandas-gbq
 openpyxl
@@ -35,8 +34,6 @@ streamlit
 altair
 pillow
 
-folium
-streamlit-folium
 uvicorn
 fastapi
 python-dotenv

@@ -12,9 +12,9 @@ app = FastAPI()
 
 def get_three_cities(employees,budget,dist_airplane,dist_train,quality,subsidies,mountain,sea,sectorimportance,sectorcode):
     # point to .env file
-    env_path = find_dotenv() # automatic find
-    load_dotenv()
-    CREDENTIAL_KEY = os.getenv('CREDENTIAL_KEY')
+    #env_path = find_dotenv() # automatic find
+    #load_dotenv()
+    CREDENTIAL_KEY = os.environ.get('CREDENTIAL_KEY')
     credentials = service_account.Credentials.from_service_account_info(json.loads(CREDENTIAL_KEY))
     #connection to database
     #pathjson="/Users/Tomas/Desktop/KEYS/the-burst-b6d61e428faa.json"
@@ -94,9 +94,9 @@ get_three_cities(100,300000,100,40,'Very_Important','Yes','Important','Important
 
 def get_five_samples(cluster):
     # point to .env file
-    env_path = find_dotenv() # automatic find
-    load_dotenv()
-    CREDENTIAL_KEY = os.getenv('CREDENTIAL_KEY')
+    #env_path = find_dotenv() # automatic find
+    #load_dotenv()
+    CREDENTIAL_KEY = os.environ.get('CREDENTIAL_KEY')
     credentials = service_account.Credentials.from_service_account_info(json.loads(CREDENTIAL_KEY))
     #connection to database
     #pathjson="/Users/Tomas/Desktop/KEYS/the-burst-b6d61e428faa.json"
